@@ -1,10 +1,12 @@
 package com.example.sqlitedemo;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.sqlitedemo.dao.PersonDao;
 import com.example.sqlitedemo.model.Person;
@@ -28,6 +30,7 @@ public class MainActivity extends Activity {
         btAdd = (Button)findViewById(R.id.btn_add);
         btList = (Button)findViewById(R.id.btn_list);
         btAdd.setOnClickListener(new btAddListener());
+        btList.setOnClickListener(new btListListener());
         dbHelper = new DatabaseHelper(this);
         dao = new PersonDao(this);
     }
@@ -39,6 +42,14 @@ public class MainActivity extends Activity {
             String phone = etPhone.getText().toString();
             Person person = new Person(0,name,phone);
             dao.insert(person);
+            Toast.makeText(MainActivity.this,"添加成功",Toast.LENGTH_SHORT).show();
+        }
+    }
+    class btListListener implements View.OnClickListener{
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(MainActivity.this,ShowActivity.class);
+            startActivity(intent);
         }
     }
 }
